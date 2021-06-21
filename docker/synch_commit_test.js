@@ -1,8 +1,23 @@
+// This file creates connections to the primary postgres and 2 secondary postgres servers.
+// It is expected that "synchronous_commit" is set to "remote_apply" in pg_settings.
+// In multiple connections (in parallel), we insert records to a table and after the commit happens, immediately read from
+// all the 3 servers. It is success, if the 3 servers return the value just inserted. Else it is considered failure
+//
+// Specify the hostnames of primary and secondary in environment variables `PGHOST`, `PGSEC2`, `PGSEC3`. Otherwise,
+// it uses `patroni1` as primary, `patroni2` as secondary1, `patroni3` as secondary2
+//
+// If the database, username, password etc changes, please edit this file directly. All are assumed to be "postgres"
+//
+// The test is expected to run for multiple loops, which can specified as an argument
+// Usage: ${process.argv[1]} create|run`)
+//                           create`)
+//                           run <num_connections> <num_loops>`)
 const { Client, Pool } = require("pg")
 const MAX_CONNECTIONS = process.argv[3] ? process.argv[3] : process.env.MAXCONNS ? parseInt(process.env.MAXCONNS) : 30
 const MAX_LOOPS = process.argv[4] ? process.argv[4] : process.env.MAXLOOPS ? parseInt(process.env.MAXLOOPS) : 5
 const SYNCOMMIT = process.env.SYNCOMMIT || null
 const USE_RLB = process.env.USE_RLB ? process.env.USE_RLB : false
+
 
 var connections = {
   primary: {},
