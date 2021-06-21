@@ -7,6 +7,7 @@ This is a fork of `Patroni <https://github.com/zalando/patroni>`_, just used to 
 Follow these steps in good faith to get the cluster up and run the synchronous commit testing
 
 ::
+
    $ git clone https://github.com/rsmoorthy/patroni
    $ cd patroni/docker
    $ docker build -t synch_commit_test -f Dockerfile.synch_commit_test .
