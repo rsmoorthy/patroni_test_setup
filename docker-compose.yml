@@ -75,3 +75,11 @@ services:
         environment:
             <<: *haproxy_env
             PATRONI_NAME: patroni3
+
+    synch_commit_test:
+        image: synch_commit_test
+        networks: [ demo ]
+        hostname: synch_commit_test
+        container_name: synch_commit_test
+        command: sleep 10000000
+
