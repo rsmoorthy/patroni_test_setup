@@ -9,7 +9,7 @@ Follow these steps in good faith to get the cluster up and run the synchronous c
 ::
 
    $ git clone https://github.com/rsmoorthy/patroni
-   $ cd patroni/docker
+   $ cd patroni/synch_commit_test
    $ docker build -t synch_commit_test -f Dockerfile.synch_commit_test .
    $ cd ..
    $ docker build -t patroni .
@@ -35,7 +35,7 @@ Enable synchronous_commit and fsync
    $ patronictl edit-config -q --force -p synchronous_commit=remote_apply
    $ patronictl edit-config -q --force -p fsync=on
    # Just to be sure, restart
-   $ patronictl restart
+   $ patronictl restart demo
    # Verify if synchronous_commit is really set to remote_apply
    $ PGPASSWORD=postgres psql -U postgres -h patroni1 postgres -c "select name,setting from pg_settings where name='synchronous_commit'"
 
@@ -54,7 +54,7 @@ Set patroni1 as the leader
 
 
 ============
-Run the synchronous_commit tests
+Run the synchronous_commit tests  (via nodejs)
 ============
 
 ::
@@ -67,5 +67,8 @@ Run the synchronous_commit tests
    ## Now run the tests. You can start with small connections and loop count as 5, then increase it
    # node synch_commit_test.js run 30 5
    # node synch_commit_test.js run 30 500
+   ....
+   success: 34840 failures sec1: 5186 sec2:4974 leader:0
+   #
 
 The tests will show success and failed outcomes. 

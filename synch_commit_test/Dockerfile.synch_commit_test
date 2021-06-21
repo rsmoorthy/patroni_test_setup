@@ -7,6 +7,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -  && \
     cd /code/node && \
     npm install pg
 
-COPY synch_commit_test.js /code/node/synch_commit_test.js
+COPY node/synch_commit_test.js /code/node/synch_commit_test.js
 
 CMD ["/bin/bash"]
