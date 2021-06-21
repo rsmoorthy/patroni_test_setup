@@ -72,3 +72,24 @@ Run the synchronous_commit tests  (via nodejs)
    #
 
 The tests will show success and failed outcomes. 
+
+
+============
+Run the synchronous_commit tests  (via java)
+============
+
+::
+
+   $ echo "PGPASSWORD=postgres psql -U postgres -h localhost postgres -c 'CREATE DATABASE test_db;'" | docker exec -i demo-patroni1 bash
+   $ docker exec -it synch_commit_test bash
+   # cd /code/java
+
+   ## Now run the tests. You can start with small connections and loop count as 5, then increase it
+   # java -cp postgresql.jar:. DBCLusterTestWithConnectionPool 30 5
+   # java -cp postgresql.jar:. DBCLusterTestWithConnectionPool 30 500
+   ....
+   REPLICA 1 :: Success: 13561 Failed: 1439 NoOfThreads: 30 LoopCount: 500
+   REPLICA 2 :: Success: 14266 Failed: 734 NoOfThreads: 30 LoopCount: 500
+   #
+
+The tests will show success and failed outcomes. 
